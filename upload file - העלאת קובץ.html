@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<style type="text/css">
+input[type="file"],
+button {
+	cursor: pointer;
+}
+.upload-btn-wrap {
+	background: #38983C;
+	display: inline-flex;
+	min-width: 150px;
+	min-height: 40px;
+	line-height: 18px;
+	font-family: arial;
+	position: relative;
+	text-align: center;
+	border-radius: 2px;
+	color: #fff;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+	text-decoration: none;
+	font-size: 16px;
+	padding: 5px 38px;
+}
+.upload-btn-wrap .file-input-box,
+.upload-btn-wrap .inputsLabel {
+	display: none;
+}
+.wpcf7-form-control-wrap-file .upload-btn-wrap .file-input,
+.wpcf7-form-control-wrap-file .upload-btn-wrap .wpcf7-form-control-wrap,
+.wpcf7-form-control-wrap-file .upload-btn-wrap .wpcf7-form-control-wrap .file-input {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 3;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	-khtml-opacity: 0;
+	cursor: pointer;
+}
+.upload-btn-wrap .wpcf7-form-control-wrap-file {
+	opacity: 1;
+}
+.upload-btn-wrap .wpcf7-form-control-wrap-file .wpcf7-not-valid-tip {
+	position: absolute;
+    bottom: -22px;
+    right: 0;
+}
+.file-input-div .delete-file {
+	display: none;
+}
+.file-input-div .delete-file {
+	position: relative;
+	z-index: 4;
+	width: 20px;
+	height: 20px;
+	line-height: 1;
+	flex-shrink: 0;
+	color: red;
+}
+.file-input-div.active .delete-file {
+	display: block;
+}
+.file-input-val-text {
+	display: inline-block;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	pointer-events: none;
+	cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+	<form action="">
+		
+		<span class="wpcf7-form-control-wrap-file">
+			<span class="upload-btn-wrap file-input-div">
+				<input type="file" name="file" class="file-input wpcf7-validates-as-required" aria-label="לחצו כאן כדי להעלות קובץ מהמחשב" />
+				<!-- [file the-file filetypes:pdf|doc|docx|txt class:file-input] -->
+				<span class="file-input-val-text" data-default-text="העלה קובץ">העלה קובץ</span>
+				<button type="button" class="delete-file" aria-label="לחצו כאן למחיקת הקובץ" title="מחיקה">x</button>
+			</span>
+		</span>
+		
+		<input type="submit" value="שליחה"/>
+	</form>
+	
+	<script type="text/javascript">
+	// File Input - on change show file name
+	jQuery('body').on('change','.file-input',function(){
+		var self = jQuery(this);
+		var fileInput = self.closest('.upload-btn-wrap').find('.file-input-val-text');
+		if( self.val() ) {
+			fileInput.text(self.val()).closest('.file-input-div').addClass('active');
+			if( self.closest('.upload-btn-wrap.error').length ) {
+				self.closest('.upload-btn-wrap.error').removeClass('error').next('label.wpcf7-not-valid-tip').remove();
+			}
+		} else {
+			var defaultText = fileInput.attr('data-default-text');
+			fileInput.text( defaultText ).closest('.file-input-div').removeClass('active');
+		}
+	});
+	// File Input - clear file
+	jQuery('body').on('click','.delete-file', function() {
+		clear_file_input( jQuery(this) );
+	});
+	// Wordpress - CF7 - Clear file input after submit
+	document.addEventListener('wpcf7mailsent', function( event ) {
+		clear_file_input();
+	}, false );
+	
+	function clear_file_input( $this ) {
+		if( typeof $this === 'undefined' ) {
+			$this = jQuery('.file-input-div.active .delete-file');
+		}
+		var fileInput = $this.closest('.upload-btn-wrap').find('.file-input-val-text');
+		var defaultText = fileInput.attr('data-default-text');
+		$this.parent().find('.file-input').val('');
+		fileInput.text(defaultText).closest('.file-input-div').removeClass('active');
+	};
+	
+	// Submit - Upload button required
+	jQuery('.file-input.wpcf7-validates-as-required').closest('form').on('submit', function(e){
+		jQuery('.file-input.wpcf7-validates-as-required', this).each(function(){
+			var upload_btn = jQuery(this).closest('.upload-btn-wrap');
+			if( ! upload_btn.hasClass('active') ) {
+				e.preventDefault();
+				upload_btn.addClass('error');
+				if( ! upload_btn.next('label.wpcf7-not-valid-tip').length ) {
+					upload_btn.after('<label class="wpcf7-not-valid-tip">שדה חובה</label>');
+				}
+			} else {
+				if( upload_btn.hasClass('error') ) {
+					upload_btn.removeClass('error').next('label.wpcf7-not-valid-tip').remove();
+				}
+			}
+		});
+	});
+	// File field focus
+	jQuery(document).on('focus', '.wpcf7-file', function(){
+		jQuery(this).closest('.upload-btn-wrap').addClass('focus');
+	});
+	// File field blur
+	jQuery(document).on('blur', '.wpcf7-file', function(){
+		jQuery(this).closest('.upload-btn-wrap').removeClass('focus');
+	});
+	</script>
+	
+</body>
+</html>
