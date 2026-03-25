@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>העלאת קובץ מעוצבת - Vanilla JS</title>
 <style type="text/css">
-/* עיצוב כללי לגוף הדף (רק לצורך התצוגה) */
+/* DEMO */
 body {
 	font-family: system-ui, -apple-system, sans-serif;
 	display: flex;
@@ -14,8 +14,9 @@ body {
 	background-color: #f8fafc;
 	margin: 0;
 }
+/* DEMO */
 
-/* עטיפת הכפתור */
+
 .upload-btn-wrap {
 	position: relative;
 	display: inline-flex;
@@ -29,27 +30,19 @@ body {
 	transition: all 0.2s ease;
 	min-width: 280px;
 }
-
-/* מצב מעבר עכבר (Hover) */
 .upload-btn-wrap:hover {
 	border-color: #4f46e5;
 	background-color: #f5f3ff;
 }
-
-/* כשהקובץ נבחר (מצב פעיל) */
 .upload-btn-wrap.active {
 	border-style: solid;
 	border-color: #22c55e;
 	background-color: #f0fdf4;
 }
-
-/* כשיש שגיאה */
 .upload-btn-wrap.error {
 	border-color: #ef4444;
 	background-color: #fef2f2;
 }
-
-/* הטקסט של שם הקובץ */
 .file-input-val-text {
 	font-size: 15px;
 	color: #1e293b;
@@ -59,24 +52,18 @@ body {
 	text-overflow: ellipsis;
 	max-width: 200px;
 }
-
-/* האייקון */
 .upload-icon {
 	width: 20px;
 	height: 20px;
 	fill: #64748b;
 	transition: fill 0.2s;
 }
-
 .upload-btn-wrap:hover .upload-icon {
 	fill: #4f46e5;
 }
-
 .upload-btn-wrap.active .upload-icon {
 	fill: #22c55e;
 }
-
-/* כפתור מחיקה (X) */
 .delete-file {
 	display: none;
 	background: #ffeded;
@@ -93,12 +80,9 @@ body {
 	margin-right: auto;
 	z-index: 1;
 }
-
 .upload-btn-wrap.active .delete-file {
 	display: inline-flex;
 }
-
-/* הסתרת האינפוט המקורי כדי שהעיצוב שלנו ישלוט */
 .file-input {
 	position: absolute;
 	inset: 0;
@@ -107,8 +91,6 @@ body {
 	width: 100%;
 	height: 100%;
 }
-
-/* הודעת שגיאה (Tip) */
 .error-tip {
 	color: #ef4444;
 	font-size: 13px;
