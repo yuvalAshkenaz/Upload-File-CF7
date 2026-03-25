@@ -18,17 +18,18 @@ body {
 
 
 .upload-btn-wrap {
-	position: relative;
+	background-color: #fff;
 	display: inline-flex;
+	width: 300px;
+	max-width: 100%;
+	position: relative;
 	align-items: center;
 	gap: 12px;
 	padding: 12px 24px;
-	background-color: #ffffff;
 	border: 2px dashed #cbd5e1;
 	border-radius: 12px;
 	cursor: pointer;
 	transition: all 0.2s ease;
-	min-width: 280px;
 }
 .upload-btn-wrap:hover {
 	border-color: #4f46e5;
@@ -44,17 +45,19 @@ body {
 	background-color: #fef2f2;
 }
 .file-input-val-text {
+	max-width: -webkit-calc(100% - 24px);
+	max-width: calc(100% - 24px);
 	font-size: 15px;
 	color: #1e293b;
 	font-weight: 500;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	max-width: 200px;
 }
 .upload-icon {
 	width: 20px;
 	height: 20px;
+	flex-shrink: 0;
 	fill: #64748b;
 	transition: fill 0.2s;
 }
